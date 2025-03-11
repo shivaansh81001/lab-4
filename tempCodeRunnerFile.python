@@ -1,0 +1,3 @@
+import ytmusicapi as yt
+
+print(yt.__version__)

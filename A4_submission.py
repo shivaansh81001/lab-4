@@ -35,8 +35,12 @@ def part1():
     DoG = np.zeros([h, w, 3])
 
     #TODO: Create DoG levels
-    # ...
 
+    
+    for i in range(3):
+        DoG[:,:,i] = filters.gaussian(J,sigma = sigmas[i]) - filters.gaussian(J,sigma = sigmas[i+1])
+
+    print(DoG)
 
     level1 = DoG[:, :, 0]
     level2 = DoG[:, :, 1]
