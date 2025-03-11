@@ -1,7 +1,8 @@
 # import statements
 import numpy as np
 import matplotlib.pyplot as plt
-from skimage import io, filters, img_as_ubyte
+from skimage import io, filters, img_as_ubyte,feature
+import scipy.ndimage.filters as scipy_filters
 
 def part1():
     
@@ -40,7 +41,7 @@ def part1():
     for i in range(3):
         DoG[:,:,i] = filters.gaussian(J,sigma = sigmas[i]) - filters.gaussian(J,sigma = sigmas[i+1])
 
-    print(DoG)
+    #print(DoG)
 
     level1 = DoG[:, :, 0]
     level2 = DoG[:, :, 1]
@@ -54,12 +55,12 @@ def part1():
     plt.show()
 
     # =========== 2. Obtain a rough estimate of blob center locations ===========
-    scatter_size = 40
+    scatter_size = 15
     scatter_col = 'r'
 
     # TODO: Detect regional minima within the DoG volume. You can check out scipy.ndimage.filters.minimum_filter. 
 
-    local_minima = ...
+    local_minima = scipy_filters.minimum_filter(DoG,size = scatter_size)
 
 
     # Plotting
@@ -70,20 +71,21 @@ def part1():
     plt.show()
 
     # TODO: Convert local_minima to a binary image A (Check the stackoverflow discussion linked on e-class for reference)
-
-    A = ...
+    
+    A = (local_minima == DoG).astype(np.uint8)
 
 
     # TODO: Collapse this 3D binary image into a single channel image and assign to variable B (Check out np.sum)
 
-    B = ...
+    B = np.sum(A, axis = 2)
 
 
     # TODO: Show the locations of all non-zero entries in this collapsed array overlaid on the input image as red points.
 
     # Check out np.nonzero()
-    [y,x] = ...
+    [y,x] = np.nonzero(B)
 
+    print([y,x])
 
     # Plotting
     plt.figure(figsize=(10,8))
