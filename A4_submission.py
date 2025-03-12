@@ -39,7 +39,8 @@ def part1():
 
     
     for i in range(3):
-        DoG[:,:,i] = filters.gaussian(J,sigma = sigmas[i]) - filters.gaussian(J,sigma = sigmas[i+1])
+        DoG[:,:,i] = filters.gaussian(J,sigma = np.round(sigmas[i],1)) - filters.gaussian(J,sigma = np.round(sigmas[i+1],1))
+        print(round(sigmas[i],1),np.round(sigmas[i+1],1))
 
     #print(DoG)
 
@@ -55,12 +56,12 @@ def part1():
     plt.show()
 
     # =========== 2. Obtain a rough estimate of blob center locations ===========
-    scatter_size = 15
+    scatter_size = 40
     scatter_col = 'r'
 
     # TODO: Detect regional minima within the DoG volume. You can check out scipy.ndimage.filters.minimum_filter. 
 
-    local_minima = scipy_filters.minimum_filter(DoG,size = scatter_size)
+    local_minima = scipy_filters.minimum_filter(DoG,size = 17)
 
 
     # Plotting
@@ -73,7 +74,7 @@ def part1():
     # TODO: Convert local_minima to a binary image A (Check the stackoverflow discussion linked on e-class for reference)
     
     A = (local_minima == DoG).astype(np.uint8)
-
+    #print(A)
 
     # TODO: Collapse this 3D binary image into a single channel image and assign to variable B (Check out np.sum)
 
