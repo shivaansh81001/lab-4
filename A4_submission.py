@@ -104,16 +104,18 @@ def part1():
     J = img_as_ubyte(J)
 
     # TODO: Apply Li thresholding on the blurred image using filters.threshold_li to obtain the optimal threshold for this image
-    threshold = ...
+    threshold = filters.threshold_li(filters.gaussian(J,sigma=4))*255
+    print(threshold)
+    print(np.unique(B))
 
     # TODO: Remove all minima in the output image (B) of "Obtain a rough estimate of blob locations" (Part 1, q2) where pixel values 
     #          are less than the obtained threshold. Assign this output to variable final
-
-    final = ...
+    
+    final = B
 
 
     # TODO: Show the remaining minima locations overlaid on the input image as red points. Once again, you can use np.nonzero()
-    [y, x] = ...
+    [y, x] = np.nonzero(final)
 
 
     # Plotting
@@ -125,9 +127,9 @@ def part1():
     plt.title('Refined blob centers detected in the image')
     plt.show()
 
-
+    exit()
     return final
-
+    
 # ----------------------------- PART 2 -----------------------------
 
 #You do not need to modify this function
