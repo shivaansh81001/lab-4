@@ -40,7 +40,7 @@ def part1():
     
     for i in range(3):
         DoG[:,:,i] = filters.gaussian(J,sigma = np.round(sigmas[i],1)) - filters.gaussian(J,sigma = np.round(sigmas[i+1],1))
-        print(round(sigmas[i],1),np.round(sigmas[i+1],1))
+        #print(round(sigmas[i],1),np.round(sigmas[i+1],1))
 
     #print(DoG)
 
@@ -61,7 +61,7 @@ def part1():
 
     # TODO: Detect regional minima within the DoG volume. You can check out scipy.ndimage.filters.minimum_filter. 
 
-    local_minima = scipy_filters.minimum_filter(DoG,size = 17)
+    local_minima = scipy_filters.minimum_filter(DoG,size = 18)
 
 
     # Plotting
@@ -86,7 +86,7 @@ def part1():
     # Check out np.nonzero()
     [y,x] = np.nonzero(B)
 
-    print([y,x])
+    #print([y,x])
 
     # Plotting
     plt.figure(figsize=(10,8))
@@ -102,18 +102,16 @@ def part1():
 
     # Apply Gaussian filtering using skimage.filters.gaussian with a suitably chosen sigma and convert to unit8
     J = img_as_ubyte(J)
-
+    #print(np.unique(J))
     # TODO: Apply Li thresholding on the blurred image using filters.threshold_li to obtain the optimal threshold for this image
-    threshold = filters.threshold_li(filters.gaussian(J,sigma=4))*255
-    print(threshold)
-    print(np.unique(B))
-
+    threshold = filters.threshold_li(filters.gaussian(J,sigma=4))*256
+    #print(threshold)
+    
     # TODO: Remove all minima in the output image (B) of "Obtain a rough estimate of blob locations" (Part 1, q2) where pixel values 
     #          are less than the obtained threshold. Assign this output to variable final
     
-    final = B
-
-
+    final = B * (J>threshold)
+    #print(np.unique(J>67))
     # TODO: Show the remaining minima locations overlaid on the input image as red points. Once again, you can use np.nonzero()
     [y, x] = np.nonzero(final)
 
