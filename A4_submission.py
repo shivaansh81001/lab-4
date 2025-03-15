@@ -185,15 +185,16 @@ def getRegionalMinima(img):
     for i in range(h):
         for j in range(w):
             r,c = getSmallestNeighborIndex(img,i,j)
-            print(f"i={i},j={j},r={r},c={c}")
-            if r==i and c==j:
+            print(r,c)
+            if img[r, c]>=img[i, j]:
                 markers[i,j]=mark
                 mark+=1
+            
     return markers
 
 # TO - DO: Complete the function iterativeMinFollowing
 def iterativeMinFollowing(img, markers):
-    exit()
+    
     """
     Parameters : 
     img          - image
