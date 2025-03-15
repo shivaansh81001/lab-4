@@ -185,7 +185,7 @@ def getRegionalMinima(img):
     for i in range(h):
         for j in range(w):
             r,c = getSmallestNeighborIndex(img,i,j)
-            print(r,c)
+            #print(r,c)
             if img[r, c]>=img[i, j]:
                 markers[i,j]=mark
                 mark+=1
@@ -204,31 +204,43 @@ def iterativeMinFollowing(img, markers):
     Returns       :  final labels (markers_copy)
 
     """
-    markers_copy = np.copy(markers)
+    markers_copy = np.copy(markers).astype(np.uint32)
     h, w = img.shape
     
     # i here is for printing iteration
-    #i=1
+    i=1
     
     while True:
-
-        #Number of pixels unmarked (label value is still 0)
         n_unmarked_pix = 0
         
+        # Try to label every unmarked pixel by adopting the label 
+        # of its smallest-intensity neighbor (if that neighbor has a label)
         for row in range(h):
             for col in range(w):
-                
-                #Your code here
+                if markers_copy[row, col] != 0:
+                    continue  # Already labeled
 
-                pass
-        
-        
+                # Get smallest-intensity neighbor
+                r, c = getSmallestNeighborIndex(img, row, col)
+                
+                # If that neighbor is labeled, copy that label
+                if markers_copy[r, c] != 0:
+                    markers_copy[row, col] = markers_copy[r, c]
+                
+                # If we still have no label, mark it as unassigned
+                if markers_copy[row, col] == 0:
+                    n_unmarked_pix += 1
         # NOTE!!: Please make sure to comment the below two print statements and i+=1 before submitting. 
         #Feel free to un-comment them while working on the assignment and observing how iterativeMinFollowing works
-        #print(f"labels after iteration {i}:")
-        #print(markers_copy)
-        #i+=1
+        print(f"labels after iteration {i}:")
+        print(markers_copy)
+        i+=1
         
         print('n_unmarked_pix: ', n_unmarked_pix)
+
+        if n_unmarked_pix==0:
+            break
+
+    print(markers_copy)
         
     return markers_copy

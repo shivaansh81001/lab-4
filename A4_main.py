@@ -50,6 +50,7 @@ def part2(final):
 
     # TO - DO: Finish functions is_4connected(), getRegionalMinima() and iterativeMinFollowing() in A4_submission.py
 
+    
     # =============== DO NOT EDIT ANY OF THE CODE BELOW ===============
 
     #Test if the functions are working as expected
