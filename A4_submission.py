@@ -208,33 +208,30 @@ def iterativeMinFollowing(img, markers):
     h, w = img.shape
     
     # i here is for printing iteration
-    i=1
+    #i=1
     
     while True:
+
+        #Number of pixels unmarked (label value is still 0)
         n_unmarked_pix = 0
         
-        # Try to label every unmarked pixel by adopting the label 
-        # of its smallest-intensity neighbor (if that neighbor has a label)
         for row in range(h):
             for col in range(w):
-                if markers_copy[row, col] != 0:
-                    continue  # Already labeled
-
-                # Get smallest-intensity neighbor
-                r, c = getSmallestNeighborIndex(img, row, col)
+                if markers_copy[row,col]!=0:
+                    continue
+            
+                m,n = getSmallestNeighborIndex(img,row,col)
+                if markers_copy[m,n]!=0:
+                    markers_copy[row,col]=markers_copy[m,n]
                 
-                # If that neighbor is labeled, copy that label
-                if markers_copy[r, c] != 0:
-                    markers_copy[row, col] = markers_copy[r, c]
-                
-                # If we still have no label, mark it as unassigned
-                if markers_copy[row, col] == 0:
-                    n_unmarked_pix += 1
+                if markers_copy[row,col]==0:
+                    n_unmarked_pix+=1
+        
         # NOTE!!: Please make sure to comment the below two print statements and i+=1 before submitting. 
         #Feel free to un-comment them while working on the assignment and observing how iterativeMinFollowing works
-        print(f"labels after iteration {i}:")
-        print(markers_copy)
-        i+=1
+        #print(f"labels after iteration {i}:")
+        #print(markers_copy)
+        #i+=1
         
         print('n_unmarked_pix: ', n_unmarked_pix)
 
