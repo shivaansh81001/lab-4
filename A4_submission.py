@@ -125,7 +125,6 @@ def part1():
     plt.title('Refined blob centers detected in the image')
     plt.show()
 
-    exit()
     return final
     
 # ----------------------------- PART 2 -----------------------------
@@ -175,23 +174,26 @@ def is_4connected(row, col, row_id, col_id):
     Return         :  Boolean. Whether pixel at location [row_id, col_id] is a 4 connected neighbour of pixel at location [row, col]
 
     """
-
-    pass
-
+    return (abs(row-row_id) + abs(col-col_id))==1   #manhattan distance
 
 # TODO: Complete the function getRegionalMinima
 def getRegionalMinima(img):
     markers = np.zeros(img.shape, dtype=np.int32)
     h, w = img.shape
-    
-    #Your code here
+    mark=1
 
-
+    for i in range(h):
+        for j in range(w):
+            r,c = getSmallestNeighborIndex(img,i,j)
+            print(f"i={i},j={j},r={r},c={c}")
+            if r==i and c==j:
+                markers[i,j]=mark
+                mark+=1
     return markers
 
 # TO - DO: Complete the function iterativeMinFollowing
 def iterativeMinFollowing(img, markers):
-
+    exit()
     """
     Parameters : 
     img          - image
